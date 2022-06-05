@@ -1,0 +1,18 @@
+ 
+
+ 
+
+{% block body %} 
+
+    <!DOCTYPE html>
+<html>
+<head></head>
+        <form action="{{path('login')}}" method="Post">
+         <input type="text" class="form-control" placeholder="username" required id="username" name="_username">
+
+           <input type="password" class="form-control" placeholder="mot de passe" required id="password"
+             name="_password">
+             <button type="submit" class="btn btn-primary btn-block btn-flat">Se Connecter</button>
+    </form>
+
+{% endblock %}

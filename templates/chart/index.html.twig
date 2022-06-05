@@ -1,0 +1,95 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello ChartController!{% endblock %}
+
+{% block body %}
+
+
+<div class="row">
+        <div class="col-lg-4" >
+    <canvas id="myChart" width="100px" height="100px" >
+    </canvas>
+        </div>
+
+        <div class="col-lg-4">
+        <canvas id="myChartetudiants" width="100px" height="100px" >
+
+        </canvas>
+        </div>
+
+
+</div>
+
+
+
+    <script>
+
+
+
+
+        var ctx = document.getElementById('myChartetudiants');
+        var myChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: {{labels | json_encode | raw}},
+                datasets: [{
+                    label: '# of Votes',
+                    data: {{datasets | json_encode | raw}},
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(54, 162, 235, 0.2)'
+
+                    ],
+                    borderColor: [
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(54, 162, 235, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+
+
+
+
+
+        var ctx = document.getElementById('myChart');
+        var myChart = new Chart(ctx, {
+            type: 'doughnut',
+            data: {
+                labels: {{labels | json_encode | raw}},
+                datasets: [{
+                    label: '# of Votes',
+                    data: {{datasets | json_encode | raw}},
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(54, 162, 235, 0.2)'
+
+                    ],
+                    borderColor: [
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(54, 162, 235, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    </script>
+    {# You can pass HTML attributes as a second argument to add them on the <canvas> tag #}
+
+
+{% endblock %}

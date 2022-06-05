@@ -1,0 +1,49 @@
+
+{% extends "base.html.twig" %}
+
+ {% block mysteel %}
+     <style>table, th, td {
+             border: 1px solid black;
+         }</style>
+ {% endblock %}
+{% block body%}
+    <div class="col-md-12" style="margin-top:50px">
+
+        <h1>Consultaion listes etudiants</h1>
+
+        <table style="border: 1px solid black ;width:100%;text-align:center;cellspacing:1px;background-color:#c0c0c0" id="example2">
+
+            <thead>
+            <tr  >
+                <th>nom</th>
+                <th>prenom</th>
+                <th>cin</th>
+                <th>Age</th>
+                <th>Actions</th>
+
+
+            </tr>
+            </thead>
+
+
+            <tbody>
+
+            {% for etudiant in etudiants%}
+                <tr   {% if  etudiant.age >25 %} style="color:red" {% else %}style="color:green" {% endif %}>
+                    <td >{{etudiant.nom}} </td>
+                    <td>{{etudiant.prenom}} </td>
+                    <td >{{etudiant.cin}} </td>
+                    <td >{{etudiant.age}} </td>
+                    <td >
+
+                       <a  href="{{path('delete_etudiant',{'id':etudiant.Id})}}" class="btn btn-danger" >Delete</a>
+                        <a  href="{{path('update_etudiant',{'id':etudiant.Id})}}" class="btn btn-warning" >Update</a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+
+        </table>
+
+    </div>
+{% endblock %}

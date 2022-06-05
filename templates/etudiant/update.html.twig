@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+{% form_theme formEtudiant 'bootstrap_4_layout.html.twig' %}
+{% block title %}Hello {{etudiant.nom}}!{% endblock %}
+
+{% block body %}
+	<div class="col-10">
+			<h1>Update Etudiant</h1>
+			
+{{form_start(formEtudiant)}}
+ 
+
+ {{form_widget(formEtudiant)}} 
+ 
+
+<button type="submit" class="btn btn-info">Enregistrer</button>
+<a  href="{{path('CRUD')}}"   class="btn btn-warning">Retour</a>
+{{form_end(formEtudiant)}}
+	</div>
+
+ 
+{% endblock %}

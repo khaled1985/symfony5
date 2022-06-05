@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello DatatableController!{% endblock %}
+
+{% block body %}
+    <!-- Insert this where you want the table to appear -->
+    <div id="presidents">Loading...</div>
+
+    <!-- Insert this at the end of your body element, but before the closing tag -->
+    <script src="{{ asset('bundles/datatables/js/datatables.js') }}"></script>
+
+{% endblock %}
+ {% block javascriptsfunction %}
+     <script src="{{ asset('js/jquery-3.2.1.min.js') }}"></script>
+
+
+     <script type="text/javascript" src="https://cdn.datatables.net/v/dt/jq-3.2.1/dt-1.10.16/datatables.min.js"></script>
+     <script type="text/javascript" src=" https://cdn.datatables.net/buttons/1.6.5/js/dataTables.buttons.min.js"></script>
+     <script type="text/javascript" src=" https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+     <script type="text/javascript" src=" https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+     <script type="text/javascript" src=" https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+     <script src="{{ asset('js/buttons.html5.min.js') }}"></script>
+     <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.6.5/js/buttons.print.min.js"></script>
+     <script src="{{ asset('bundles/datatables/js/datatables.js') }}"></script>
+     <script>
+         $(function() {
+             $('#presidents').initDataTables({{ datatable_settings(datatable)   }},
+                 { searching:true,"pageLength": 10,dom:'Bfrtip', buttons: [
+                         'copy', 'csv', 'excel', 'pdf', 'print'
+                     ]}   );
+         });
+     </script>
+ {% endblock %}

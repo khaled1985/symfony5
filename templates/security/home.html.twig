@@ -1,0 +1,12 @@
+ 
+
+ 
+
+{% block body %} 
+  {% if not app.user%}
+    {% include 'security/login.html.twig' %}
+       
+    {% else %}
+        {% include 'base.html.twig' %}
+    {% endif %}
+{% endblock %}

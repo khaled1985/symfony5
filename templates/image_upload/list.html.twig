@@ -1,0 +1,31 @@
+<div class="container">
+    
+
+<table class="table" >
+    <thead>
+        <tr>
+            <th>title</th>
+            <th>description</th>
+            <th>image</th>
+            <th>Update</th>
+            <th>Delete</th>
+        </tr>
+    </thead>
+    <tbody>
+     {% for item in lists %}
+     <tr>
+            <td scope="row"> {{item.title}} </td>
+            <td> {{item.description}}</td>
+            <td> <img src="{{asset('/public/' ~ item.image)}}" width="90px" heigth="90px" alt="" /></td>
+            <td><a href="{{path('updateImage',{'id':item.id})}}">update</a> </td>
+            <td><a href="{{path('deleteImage',{'id':item.id})}}">delete</a> </td>
+             
+        </tr>
+   
+{% endfor %}  
+         
+    </tbody>
+</table>
+
+</div>
+

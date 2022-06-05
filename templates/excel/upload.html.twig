@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+{% form_theme formUpload 'bootstrap_4_layout.html.twig' %}
+{% block title %}Hello formUpload!{% endblock %}
+
+{% block body %}
+    <div class="col-10">
+        <h1>Création Etudiant</h1>
+
+        {{form_start(formUpload)}}
+
+
+        {{form_widget(formUpload)}}
+
+
+        <button type="submit" class="btn btn-info">Enregistrer</button>
+
+        {{form_end(formUpload)}}
+    </div>
+
+
+{% endblock %}

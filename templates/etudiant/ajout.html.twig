@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+ {% form_theme formInscription 'bootstrap_4_layout.html.twig' %}
+{% block body %}
+    <div class="example-wrapper container col-6"  >
+        {{form_start(formInscription)}}
+        {{form_row(formInscription.nom)}}
+        {{form_row(formInscription.prenom)}}
+        {{form_row(formInscription.cin)}}
+        {{form_row(formInscription.age)}}
+        <button type="submit" class="btn btn-info" >Enregistrer</button>
+        {{form_end(formInscription)}}
+    </div>
+{% endblock %}
