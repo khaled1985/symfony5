@@ -33,6 +33,20 @@ class EtudiantsRepository extends ServiceEntityRepository
     }
 
 
+    
+    public function nbrEtudiantNom($nomEtudiant)
+    { 
+
+        return $this->createQueryBuilder('p')
+        ->select('count(p.nom) as nbrnom')
+        ->where('p.nom= :nomEtudiant')
+        ->setParameter('nomEtudiant',$nomEtudiant)
+        ->getQuery()
+        // ->getOneOrNullResult();  return array result
+        ->getSingleScalarResult();  //return variable
+    }
+
+
 
     public function findLatest()
     {

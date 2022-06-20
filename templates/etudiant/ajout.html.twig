@@ -1,9 +1,26 @@
 {% extends 'base.html.twig' %}
 
  {% form_theme formInscription 'bootstrap_4_layout.html.twig' %}
+
+
 {% block body %}
     <div class="example-wrapper container col-6"  >
-        {{form_start(formInscription)}}
+
+    {# read and display just one flash message type
+{% for message in app.flashes('warning') %}
+    <div class="alert alert-primary">
+        {{ message }}
+    </div>
+{% endfor %}
+
+     
+{% for message in app.flashes('success') %}
+    <div class="alert alert-success">
+        {{ message }}
+    </div>
+{% endfor %} #} 
+
+       {{form_start(formInscription)}}
         {{form_row(formInscription.nom)}}
         {{form_row(formInscription.prenom)}}
         {{form_row(formInscription.cin)}}

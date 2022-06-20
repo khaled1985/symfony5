@@ -32,6 +32,15 @@ class Image
      */
     private $image;
 
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $auteur;
+
+
+      
+    private $autBlog;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -69,6 +78,31 @@ class Image
     public function setImage(string $image): self
     {
         $this->image = $image;
+
+        return $this;
+    }
+
+    public function getAuteur(): ?int
+    {
+        return $this->auteur;
+    }
+
+    public function setAuteur(int $auteur): self
+    {
+        $this->auteur = $auteur;
+
+        return $this;
+    }
+
+
+    public function getautBlog(): ?int
+    {
+        return $this->autBlog;
+    }
+
+    public function setautBlog(int $autBlog): self
+    {
+        $this->autBlog = $autBlog;
 
         return $this;
     }

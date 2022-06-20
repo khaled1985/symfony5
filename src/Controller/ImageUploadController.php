@@ -14,13 +14,14 @@ use Symfony\Component\String\Slugger\SluggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Symfony\Component\HttpFoundation\RequestStack;
 
 class ImageUploadController extends AbstractController
 {
     /**
      * @Route("/image", name="image_upload")
      */
-    public function index(Request $request,EntityManagerInterface $em,SluggerInterface $slugger): Response
+    public function index(RequestStack $session, Request $request,EntityManagerInterface $em,SluggerInterface $slugger): Response
     {
         $img=new Image();
             $form=$this->createForm(ImageType::class,$img);
@@ -45,6 +46,8 @@ class ImageUploadController extends AbstractController
                 $blog->setImage($newFilename);
             }
 
+           
+            $blog->setAuteur( $request->getSession()->get('idUser'));
             $em->persist($blog);
             $em->flush();
             $this->addFlash('success', 'Blog was created!');
@@ -66,7 +69,7 @@ class ImageUploadController extends AbstractController
      *
      * @return Response
      */
-    public function editImage(Image $image,Request $request,EntityManagerInterface $em,SluggerInterface $slugger): Response
+    public function editImage(RequestStack $session, Image $image,Request $request,EntityManagerInterface $em,SluggerInterface $slugger): Response
     {
        
       $image->setImage( $image->getImage());
@@ -95,7 +98,7 @@ class ImageUploadController extends AbstractController
                 }
                 $image->setImage($newFilename);
             }
-
+          
             $em->persist($image);
             $em->flush();
             $this->addFlash('success', 'Blog was edited!');

@@ -4,16 +4,18 @@ namespace App\Controller;
 
 use App\Entity\Etudiants;
 use App\Form\EtudiantType;
-use App\Repository\EtudiantsRepository;
 use App\Services\CheckNom;
-use Doctrine\ORM\EntityManagerInterface;
+use App\Repository\EtudiantsRepository;
 use PhpOffice\PhpSpreadsheet\IOFactory;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Form\Extension\Core\Type\FileType;
-use Symfony\Component\HttpFoundation\File\Exception\FileException;
+use Doctrine\ORM\EntityManagerInterface;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 class FormationController extends AbstractController
 {
@@ -46,18 +48,36 @@ class FormationController extends AbstractController
     /**
      * @Route("/addEtudiant", name="addEtudiant")
      */
-    public function ajout(CheckNom $service,EntityManagerInterface $em,Request $request)
+    public function ajout(SessionInterface $session, EtudiantsRepository $etudRepo, CheckNom $service,EntityManagerInterface $em,Request $request)
     {
         $etudiant = new  Etudiants();
         $form=$this->createForm(EtudiantType::class,$etudiant);
         $form->handleRequest($request);  // Récupérer la request(les données de la requete)
 
         if($form->isSubmitted() && $form->isValid()){
+
+
+             //dd( $session->get('idUser'));
+
+
             if($service->check_string($etudiant->getNom())<6){
                 throw new \Exception('nom doit etre sup a 6');
             } else{
+
+             $nbrNom= $etudRepo->nbrEtudiantNom($etudiant->getNom());
+             
+            if ($nbrNom<2) {
+                
                 $em->persist($etudiant);
                 $em->flush();
+                $this->addFlash('success', 'etudiant '.$etudiant->getNom().'  inserer');
+
+            }else {
+                $this->get('session')->getFlashBag()->clear();
+
+                
+               $this->addFlash('warning', 'etudiant '.$etudiant->getNom().'  existe');
+            }
                 // return $this->redirectToRoute('listes');
             }
         }
@@ -71,14 +91,28 @@ class FormationController extends AbstractController
     /**
      * @Route("CRUD",name="CRUD")
      */
-    public function listes_etudiants(EtudiantsRepository $repo){
-        $listes = $repo->findAll();
-        //$listes = $repo->findLatest();
+    public function listes_etudiants(Request $request,EtudiantsRepository $repo,PaginatorInterface $paginator){
+        // $listes = $repo->findAll();
+        // //$listes = $repo->findLatest();
 
        
+        // return $this->render('etudiant/list.html.twig',[
+        //     "etudiants"=>$listes
+        // ]) ;
+
+        $listessss = $repo->findAll();
+
+        
+         
+        $listes = $paginator->paginate(
+            $listessss, // Requête contenant les données à paginer (ici nos articles)
+            $request->query->getInt('page', 1), // Numéro de la page en cours, passé dans l'URL, 1 si aucune page
+            1 // Nombre de résultats par page
+        );
         return $this->render('etudiant/list.html.twig',[
             "etudiants"=>$listes
         ]) ;
+
     }
 
 

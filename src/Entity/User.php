@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -34,6 +36,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @ORM\Column(type="string")
      */
     private $password;
+
+    /**
+     * @ORM\OneToMany(targetEntity=SauvAuhentification::class, mappedBy="idUser")
+     */
+    private $sauvAuhentifications;
+
+    public function __construct()
+    {
+        $this->sauvAuhentifications = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -117,5 +129,35 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
+    }
+
+    /**
+     * @return Collection<int, SauvAuhentification>
+     */
+    public function getSauvAuhentifications(): Collection
+    {
+        return $this->sauvAuhentifications;
+    }
+
+    public function addSauvAuhentification(SauvAuhentification $sauvAuhentification): self
+    {
+        if (!$this->sauvAuhentifications->contains($sauvAuhentification)) {
+            $this->sauvAuhentifications[] = $sauvAuhentification;
+            $sauvAuhentification->setIdUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSauvAuhentification(SauvAuhentification $sauvAuhentification): self
+    {
+        if ($this->sauvAuhentifications->removeElement($sauvAuhentification)) {
+            // set the owning side to null (unless already changed)
+            if ($sauvAuhentification->getIdUser() === $this) {
+                $sauvAuhentification->setIdUser(null);
+            }
+        }
+
+        return $this;
     }
 }

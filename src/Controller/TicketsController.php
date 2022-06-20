@@ -27,6 +27,7 @@ class TicketsController extends AbstractController
          
             $em->persist($ticket);
             $em->flush();
+            $this->addFlash('success', 'Insertion du tickets avec succes!');
         }
 
         return $this->renderForm('tickets/index.html.twig', compact('form'));

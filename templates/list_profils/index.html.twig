@@ -5,6 +5,8 @@
 {% endblock %}
 
 {% block body %} 
+<div class="container">
+
 <div class="row">
   
 
@@ -70,7 +72,11 @@
                  <div class="footer">
                      <div class="social-links text-center">
                      
+
+                     {% if item.autblog==1 %}
+                     
                        <a  href="{{path('updateImage',{'id':item.Id})}}" class="btn btn-warning" >Update</a>
+                       {% endif %}
                        <a onclick="if(!confirm('Are you sure ?')) { return false; }"
  href="{{path('deleteImageList',{'id':item.Id,'title':item.title})}}" class="btn btn-danger" >Delete</a>
                      
@@ -85,5 +91,12 @@
      
 {% endfor %}
 
+</div>
+ 
+   {{ knp_pagination_render(lists,'pagination/twitter_bootstrap_v4_pagination.html.twig') }}
+ 
+
+
+     
 </div>
 {% endblock %}

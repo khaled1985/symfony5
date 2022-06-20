@@ -1,101 +1,128 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        {# Run `composer require symfony/webpack-encore-bundle`
-           and uncomment the following Encore helpers to start using Symfony UX #}
-        {% block stylesheets %}
-            <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" >
-             
-            <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/jq-3.2.1/dt-1.10.16/datatables.min.css"/>
-            {#{{ encore_entry_link_tags('app') }}#}
-              <link href="https://netdna.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" />
+	<head>
+		<meta charset="UTF-8">
+		<title>
+			{% block title %}Welcome!
+			{% endblock %}
+		</title>
+		{# Run `composer require symfony/webpack-encore-bundle`
+				           and uncomment the following Encore helpers to start using Symfony UX #}
+		{% block stylesheets %}
+			<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
 
-            
-        {% endblock %}
-{% block style %}{% endblock %}
-        {% block javascripts %}
-
-
-            <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-            <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-            <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-            {#{{ encore_entry_script_tags('app') }}#}
-
-            <script type="text/javascript" src="https://cdn.datatables.net/v/dt/jq-3.2.1/dt-1.10.16/datatables.min.js"></script>
-            <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.5.1/chart.min.js"></script>
-
-        {% endblock %}
+			<link
+			rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/jq-3.2.1/dt-1.10.16/datatables.min.css"/>
+			{#{{ encore_entry_link_tags('app') }}#}
+			<link href="https://netdna.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet"/>
 
 
-        {% block javascriptsfunction %}
-
-        {% endblock %}
-    </head>
-    <body>
-
-    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-        <a class="navbar-brand" href="#">Navbar</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav mr-auto">
-                <li class="nav-item active">
-                    <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-                </li>
-
-                <li class="nav-item active">
-                    <a class="nav-link"  href="{{path('addEtudiant')}}">Ajout Etudiant <span class="sr-only">(current)</span></a>
-                </li>
-                <li class="nav-item active">
-                    <a class="nav-link"  href="{{path('CRUD')}}">CRUD <span class="sr-only">(current)</span></a>
-                </li>
-                <li class="nav-item active">
-                    <a class="nav-link"  href="{{path('datatable')}}">Datatable <span class="sr-only">(current)</span></a>
-                </li>
-
-                {% if is_granted('ROLE_SUPER_ADMIN') %}
-                <li class="nav-item active">
-                    <a class="nav-link"  href="{{path('chart')}}">Chart <span class="sr-only">(current)</span></a>
-                </li>
-
-                {% endif %}
-                <li class="nav-item active">
-                    <a class="nav-link" href="{{path('logout')}}">Déconnexion <span class="sr-only">(current)</span></a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Link</a>
-                </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Dropdown
-                    </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="{{path('tickets')}}">Tickets</a>
-                        <a class="dropdown-item" href="{{path('image_upload')}}">Ajouter Image</a>
-                        <a class="dropdown-item" href="{{path('crud_image')}}">Crud Image</a>
-                          <a class="dropdown-item" href="{{path('list_profils')}}">Listes Profiles</a>
-                        <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="#">Something else here</a>
-                    </div>
+		{% endblock %}
+		{% block style %}{% endblock %}
+		{% block javascripts %}
 
 
-                    
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link disabled" href="#">Disabled</a>
-                </li>
-            </ul>
+			<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+			<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+			<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+			{#{{ encore_entry_script_tags('app') }}#}
 
-        </div>
-    </nav>
+			<script type="text/javascript" src="https://cdn.datatables.net/v/dt/jq-3.2.1/dt-1.10.16/datatables.min.js"></script>
+			<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.5.1/chart.min.js"></script>
+
+		{% endblock %}
 
 
-        {% block body %}
-            <img src="{{asset('images/bienvenue.jpg') }}" alt="benvenue">
-        {% endblock %}
-    </body>
+		{% block javascriptsfunction %}{% endblock %}
+	</head>
+	<body>
+
+		<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+			<a class="navbar-brand" href="#">Navbar</a>
+			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+
+			<div class="collapse navbar-collapse" id="navbarSupportedContent">
+				<ul class="navbar-nav mr-auto">
+					<li class="nav-item active">
+						<a class="nav-link" href="#">Home
+							<span class="sr-only">(current)</span>
+						</a>
+					</li>
+
+					<li class="nav-item active">
+						<a class="nav-link" href="{{path('addEtudiant')}}">Ajout Etudiant
+							<span class="sr-only">(current)</span>
+						</a>
+					</li>
+					<li class="nav-item active">
+						<a class="nav-link" href="{{path('CRUD')}}">CRUD
+							<span class="sr-only">(current)</span>
+						</a>
+					</li>
+					<li class="nav-item active">
+						<a class="nav-link" href="{{path('datatable')}}">Datatable
+							<span class="sr-only">(current)</span>
+						</a>
+					</li>
+
+					{% if is_granted('ROLE_SUPER_ADMIN') %}
+						<li class="nav-item active">
+							<a class="nav-link" href="{{path('chart')}}">Chart
+								<span class="sr-only">(current)</span>
+							</a>
+						</li>
+
+					{% endif %}
+					<li class="nav-item active">
+						<a class="nav-link" href="{{path('logout')}}">Déconnexion
+							<span class="sr-only">(current)</span>
+						</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="#">Link</a>
+					</li>
+					<li class="nav-item dropdown">
+						<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							Dropdown
+						</a>
+						<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+							<a class="dropdown-item" href="{{path('tickets')}}">Tickets</a>
+							<a class="dropdown-item" href="{{path('image_upload')}}">Ajouter Image</a>
+							<a class="dropdown-item" href="{{path('crud_image')}}">Crud Image</a>
+							<a class="dropdown-item" href="{{path('list_profils')}}">Listes Profiles</a>
+							<div class="dropdown-divider"></div>
+							<a class="dropdown-item" href="#">Something else here</a>
+						</div>
+
+
+					</li>
+					<li class="nav-item">
+						<a class="nav-link disabled" href="#">Disabled</a>
+					</li>
+				</ul>
+
+			</div>
+		</nav>
+		<br>
+		<div
+			class="container">
+			<!--  pour afficher les messages  -->
+			{% for type, messages in app.flashes %}
+				{% for message in messages %}
+
+					<div class="alert alert-{{ type }} alert-dismissible fade show">
+						<button type="button" class="close" data-dismiss="alert">&times;</button>
+						{{ message }}
+
+					</div>
+				{% endfor %}
+			{% endfor %}
+		</div>
+
+		{% block body %}
+			<img src="{{asset('images/bienvenue.jpg') }}" alt="benvenue">
+		{% endblock %}
+	</body>
 </html>

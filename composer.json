@@ -11,6 +11,8 @@
         "doctrine/doctrine-bundle": "^2.4",
         "doctrine/doctrine-migrations-bundle": "^3.1",
         "doctrine/orm": "^2.9",
+        "knplabs/knp-paginator-bundle": "^5.8",
+        "lexik/jwt-authentication-bundle": "^2.15",
         "omines/datatables-bundle": "^0.5.5",
         "phpdocumentor/reflection-docblock": "^5.2",
         "phpoffice/phpspreadsheet": "^1.18",
@@ -62,7 +64,8 @@
         "preferred-install": {
             "*": "dist"
         },
-        "sort-packages": true
+        "sort-packages": true,
+        "disable-tls": true
     },
     "autoload": {
         "psr-4": {

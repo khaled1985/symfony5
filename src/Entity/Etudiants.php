@@ -2,10 +2,11 @@
 
 namespace App\Entity;
 
-use App\Repository\EtudiantsRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\EtudiantsRepository;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -17,6 +18,7 @@ class Etudiants
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Groups("post:read")
      */
     private $id;
 
@@ -28,21 +30,25 @@ class Etudiants
      *      minMessage = "Your first name must be at least {{ limit }} characters long",
      *      maxMessage = "Your first name cannot be longer than {{ limit }} characters"
      * )
+     * @Groups("post:read")
      */
     private $nom;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups("post:read")
      */
     private $prenom;
 
     /**
      * @ORM\Column(type="integer")
+     * @Groups("post:read")
      */
     private $age;
 
     /**
      * @ORM\Column(type="integer")
+     * @Groups("post:read")
 
      */
     private $cin;
