@@ -34,9 +34,15 @@ class City
      */
     private $tickets;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Formateur::class, mappedBy="city")
+     */
+    private $formateurs;
+
     public function __construct()
     {
         $this->tickets = new ArrayCollection();
+        $this->formateurs = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -92,6 +98,36 @@ class City
             // set the owning side to null (unless already changed)
             if ($ticket->getCity() === $this) {
                 $ticket->setCity(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Formateur>
+     */
+    public function getFormateurs(): Collection
+    {
+        return $this->formateurs;
+    }
+
+    public function addFormateur(Formateur $formateur): self
+    {
+        if (!$this->formateurs->contains($formateur)) {
+            $this->formateurs[] = $formateur;
+            $formateur->setCity($this);
+        }
+
+        return $this;
+    }
+
+    public function removeFormateur(Formateur $formateur): self
+    {
+        if ($this->formateurs->removeElement($formateur)) {
+            // set the owning side to null (unless already changed)
+            if ($formateur->getCity() === $this) {
+                $formateur->setCity(null);
             }
         }
 

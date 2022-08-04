@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Repository\CityRepository;
 use App\Repository\CountryRepository;
+use App\Repository\FormateurRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -46,6 +47,35 @@ class AjaxController extends AbstractController
       foreach($listesCity as $City){
         
         $listes.=   " <option value=\"".$City->getId()."\">".$City->getCity()."</option>" ;
+      }
+    
+        echo $listes;
+
+      $response=new Response();
+      $response->listes=$listes;
+      
+       return $response;
+
+
+    }
+
+
+
+    
+    /**
+     * @Route("/getFormateur", name="getFormateur")
+     */
+    public function getFormateur(Request $request,FormateurRepository $repo) 
+
+    {
+      $idCity= $request->request->get('idCity');
+      $listesFormateurs=$repo->getForm($idCity);
+      
+        $listes="";
+         
+      foreach($listesFormateurs as $form){
+        
+        $listes.= $form->getId()."\">".$form->getNom() ."///".$form->getcity()->getId();
       }
     
         echo $listes;

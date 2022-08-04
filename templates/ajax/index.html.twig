@@ -5,9 +5,11 @@
 {% block body %} 
 
  <div class="container">
-   
+ 
 <div class="row">
     
+
+
 
 <div class="col-4">
     <label for="categories">Categoris</label>
@@ -31,6 +33,10 @@
 
   
  </div>
+
+ <div id="contentRecherche">  
+
+ </div>
 {% endblock %}
 
 {% block myjs %}
@@ -38,8 +44,21 @@
  
      function findEtud(){
         idCountry=$("#categories").val();
-                idcity=$("#city").val();
-                alert(idcity);
+                idCity=$("#city").val();
+
+                  $.ajax({
+                 type: 'POST',
+                 data: {idCity},
+                 async: 'false',
+                 cache: 'false',
+                 dataType: 'text',
+                 url:'{{ path('getFormateur') }}',
+                 success: function(data) {
+                    alert(data);
+                    $('#contentRecherche').html(data);
+                 }
+             });
+                
      }
 function gettt(){
   idCountry=$("#categories").val();
