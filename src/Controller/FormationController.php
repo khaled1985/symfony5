@@ -9,11 +9,13 @@ use App\Repository\EtudiantsRepository;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
+use PhpParser\Node\Stmt\Expression;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\ExpressionLanguage\ExpressionLanguage;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
@@ -250,4 +252,17 @@ class FormationController extends AbstractController
     }
 
 
+
+
+
+    
+
+    /**
+     * @Route("test",name="test")
+     */
+
+    public function test(){
+   $language= new ExpressionLanguage();
+   dd($language->compile('1+2'));
+    }
 }

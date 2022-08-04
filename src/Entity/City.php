@@ -22,7 +22,7 @@ class City
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $name;
+    private $city;
 
     /**
      * @ORM\ManyToOne(targetEntity=Country::class, inversedBy="cities")
@@ -44,12 +44,12 @@ class City
         return $this->id;
     }
 
-    public function getName(): ?string
+    public function getCity(): ?string
     {
-        return $this->name;
+        return $this->city;
     }
 
-    public function setName(string $name): self
+    public function setCity(string $name): self
     {
         $this->name = $name;
 

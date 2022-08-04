@@ -1,0 +1,66 @@
+{% extends 'base.html.twig' %}
+
+{% block title 'Contact' %}
+
+{% block body %}
+    <div class="row">
+        <div class="col-6 mx-auto">
+            <h1 class="display-4 my-5">Are you facing any <span class="text-danger">issues</span> 😔?</h1>
+
+            {{ form_start(form) }}
+                {% if form.vars.errors is not empty %}
+                    <div class="mb-3 text-center">
+                        {{ form_errors(form) }}
+                    </div>
+                {% endif %}
+
+           
+                {{ form_row(form.country) }}
+                              {{ form_row(form.city) }}
+               
+                
+             
+
+                <button type="submit" class="btn btn-primary w-100" formnovalidate>Send</button>
+            {{ form_end(form) }}
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const countrySelectEl = document.getElementById('form_recherche_country');
+     
+            countrySelectEl.addEventListener('change', function(e) {
+                const formEl = countrySelectEl.closest('form');
+     
+             console.log(formEl.action);
+                fetch(formEl.action, {
+                    method: formEl.method,
+                    body: new FormData(formEl)
+                    
+                })
+                .then(response => response.text())
+                .then(html => {
+                    
+
+                    const parser = new DOMParser();
+                    const doc = parser.parseFromString(html, 'text/html');
+                    const newCityFormFieldEl = doc.getElementById('form_recherche_city');
+               
+                    newCityFormFieldEl.addEventListener('change', function(e) {
+                   
+                        e.target.classList.remove('is-invalid');
+                    });
+                   
+                    document.getElementById('form_recherche_city').replaceWith(newCityFormFieldEl);
+                })
+                .catch(function (err) {
+                    alert("faux");
+                    console.log('Something went .', err);
+                });
+            });
+        });
+    </script>
+{% endblock %}

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 	<head>
-		<meta charset="UTF-8">
+		<meta >
 		<title>
 			{% block title %}Welcome!
 			{% endblock %}
@@ -29,6 +29,7 @@
 
 			<script type="text/javascript" src="https://cdn.datatables.net/v/dt/jq-3.2.1/dt-1.10.16/datatables.min.js"></script>
 			<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.5.1/chart.min.js"></script>
+<script src="{{ asset('bundles/tetranzselect2entity/js/select2entity.js') }}"></script>
 
 		{% endblock %}
 
@@ -46,7 +47,7 @@
 			<div class="collapse navbar-collapse" id="navbarSupportedContent">
 				<ul class="navbar-nav mr-auto">
 					<li class="nav-item active">
-						<a class="nav-link" href="#">Home
+						<a class="nav-link" href="#"> Home 
 							<span class="sr-only">(current)</span>
 						</a>
 					</li>
@@ -61,6 +62,12 @@
 							<span class="sr-only">(current)</span>
 						</a>
 					</li>
+					<li class="nav-item active">
+						<a class="nav-link" href="{{path('form_recherche')}}">Form recherche
+							<span class="sr-only">(current)</span>
+						</a>
+					</li>
+
 					<li class="nav-item active">
 						<a class="nav-link" href="{{path('datatable')}}">Datatable
 							<span class="sr-only">(current)</span>

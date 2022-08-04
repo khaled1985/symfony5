@@ -28,7 +28,7 @@ class ApiController extends AbstractController
     public function api_login(): JsonResponse
     {
         $user = $this->getUser();
-        dd($user);
+      
          return new JsonResponse([
             'email' => $user->getUsername(),
             'roles' => $user->getRoles(),

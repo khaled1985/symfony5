@@ -19,9 +19,10 @@ class ListProfilsController extends AbstractController
      * @Route("/list/profils", name="list_profils")
      */
     public function index(Request $request,PaginatorInterface  $paginator,ImageRepository $repo): Response
+    
     {
 
-        $listessss = $repo->findAllArray();
+        $listessss = $repo->findAllArray() ;
        
  
          for ($i=0; $i <count($listessss) ; $i++) { 
