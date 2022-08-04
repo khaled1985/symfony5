@@ -21,6 +21,21 @@ class CityRepository extends ServiceEntityRepository
     }
 
  
+       
+    public function findCountryByid($idCity)
+    {
+        $qb = $this->createQueryBuilder('c');
+          $qb->select( 'c' )
+            
+            
+        ->where('c.id = :userid')
+       
+        ->setParameter('userid', $idCity);
+         
+        return $qb->getQuery()->getResult();
+    }
+
+
     public function getCity($idCountry)
     {
         

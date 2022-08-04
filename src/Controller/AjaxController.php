@@ -65,17 +65,20 @@ class AjaxController extends AbstractController
     /**
      * @Route("/getFormateur", name="getFormateur")
      */
-    public function getFormateur(Request $request,FormateurRepository $repo) 
+    public function getFormateur(Request $request,FormateurRepository $repo,CityRepository $repoCountry) 
 
     {
       $idCity= $request->request->get('idCity');
       $listesFormateurs=$repo->getForm($idCity);
+        $idCountr=$listesFormateurs[0]->getcity()->getId();
+        
+      $country=$repoCountry->findCountryByid($idCountr);
       
         $listes="";
          
       foreach($listesFormateurs as $form){
-        
-        $listes.= $form->getId()."\">".$form->getNom() ."///".$form->getcity()->getId();
+     
+        $listes.= $form->getId()."\">".$form->getNom() ."///".$form->getcity()->getCity()."///".$country[0]->getcountry()->getName()."<br>";
       }
     
         echo $listes;
