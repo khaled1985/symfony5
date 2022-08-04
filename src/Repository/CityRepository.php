@@ -20,24 +20,16 @@ class CityRepository extends ServiceEntityRepository
         parent::__construct($registry, City::class);
     }
 
-    // /**
-    //  * @return City[] Returns an array of City objects
-    //  */
-    /*
-    
-    public function findByExampleField($value)
+ 
+    public function getCity($idCountry)
     {
-        return $this->createQueryBuilder('c')
-            ->andWhere('c.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('c.id', 'ASC')
-            ->setMaxResults(10)
+        
+        return $this->createQueryBuilder('s')
+            
+            ->where('s.country = :idParent')->setParameter('idParent',  $idCountry)
             ->getQuery()
-            ->getResult()
-        ;
+            ->getResult();
     }
-    */
-
     
     public function findByCountryOrderedByAscName(Country $country): array
     {
@@ -47,16 +39,5 @@ class CityRepository extends ServiceEntityRepository
             ->orderBy('c.name', 'ASC')
             ->getQuery()
             ->getResult();
-    }
-    /*
-    public function findOneBySomeField($value): ?City
-    {
-        return $this->createQueryBuilder('c')
-            ->andWhere('c.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
+    } 
 }

@@ -1,0 +1,57 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello AjaxController!{% endblock %}
+
+{% block body %} 
+
+ 
+<div class="row">
+    
+
+<div class="col-4">
+    <label for="categories">Categoris</label>
+    <select class="custom-select" name="categories" id="categories" onchange="gettt()">
+       {{listesPays|raw}}
+    </select>
+</div>
+
+<div class="col-4">
+    <label for="city">City</label>
+    <select class="custom-select" name="city" id="city" disabled>
+       
+    </select>
+</div>
+ </div>
+
+ <button type="button" class="btn btn-primary" onclick="findEtud()">Chercher</button>
+{% endblock %}
+
+{% block myjs %}
+<script>
+ 
+     function findEtud(){
+        idCountry=$("#categories").val();
+                idcity=$("#city").val();
+                alert(idcity);
+     }
+function gettt(){
+  idCountry=$("#categories").val();
+ 
+      $.ajax({
+                 type: 'POST',
+                 data: {idCountry},
+                 async: 'false',
+                 cache: 'false',
+                 dataType: 'text',
+                 url:'{{ path('getCities') }}',
+                 success: function(data) {
+                     $('#city').prop("disabled",false);
+                    $('#city').html(data);
+                 }
+             });
+}
+
+
+ 
+</script>
+{% endblock %}
