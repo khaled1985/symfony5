@@ -48,7 +48,7 @@ class AjaxController extends AbstractController
         $listes.=   " <option value=\"".$City->getId()."\">".$City->getCity()."</option>" ;
       }
     
-    echo $listes;
+        echo $listes;
 
       $response=new Response();
       $response->listes=$listes;

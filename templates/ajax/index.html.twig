@@ -4,7 +4,8 @@
 
 {% block body %} 
 
- 
+ <div class="container">
+   
 <div class="row">
     
 
@@ -21,9 +22,15 @@
        
     </select>
 </div>
+
+<div class="col-4 align-self-end">
+ <button type="button" class="btn btn-primary " onclick="findEtud()">Chercher</button>
+</div>
  </div>
 
- <button type="button" class="btn btn-primary" onclick="findEtud()">Chercher</button>
+
+  
+ </div>
 {% endblock %}
 
 {% block myjs %}
