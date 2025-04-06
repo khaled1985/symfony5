@@ -14,129 +14,125 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Serializer\Exception\NotEncodableValueException;
 
-
 /**
  * @Route("/api", name="api")
  */
 class ApiController extends AbstractController
 {
-    
+    private $validator;
+    private $serializer;
+    private $entityManager;
+
+    public function __construct(
+        ValidatorInterface $validator,
+        SerializerInterface $serializer,
+        EntityManagerInterface $entityManager
+    ) {
+        $this->validator = $validator;
+        $this->serializer = $serializer;
+        $this->entityManager = $entityManager;
+    }
+
     /**
-     * @Route(name="api_login", path="/api/login_check")
-     * @return JsonResponse
+     * @Route("/api/login_check", name="api_login")
      */
-    public function api_login(): JsonResponse
+    public function apiLogin(): JsonResponse
     {
         $user = $this->getUser();
-      
-         return new JsonResponse([
+        return $this->json([
             'email' => $user->getUsername(),
-            'roles' => $user->getRoles(),
+            'roles' => $user->getRoles()
         ]);
     }
 
-
     /**
-     * @Route("/listes", name="liste" ,methods={"GET"})
+     * @Route("/listes", name="liste", methods={"GET"})
      */
-    public function listes(EtudiantsRepository $repo)
+    public function listes(EtudiantsRepository $repo): JsonResponse
     {
-
-        //$etudiants=$repo->findAll();
-
-      //  $serializedEntity = $this->container->get('serializer')->serialize($etudiants, 'json');
-
-       // return new Response($serializedEntity);
-//return $this->json($repo->findAll(),200,[]);
-  return $this->json($repo->findAll(),200,[],['groups'=>'post:read']);  //@Groups('post:read');
+        return $this->json(
+            $repo->findAll(),
+            Response::HTTP_OK,
+            [],
+            ['groups' => 'post:read']
+        );
     }
 
-
     /**
-     * @Route("/etudiants/supprimer/{id}", name="supprimer" ,methods={"DELETE"})
+     * @Route("/etudiants/supprimer/{id}", name="supprimer", methods={"DELETE"})
      */
-    public function removeEtudiant(Etudiants $etudiant,EntityManagerInterface $em): Response
-    {     $em->remove($etudiant);       $em->flush();   
-            //return new Response("OK");   
-            return $this->json($etudiant->getNom(),201);
+    public function removeEtudiant(Etudiants $etudiant): JsonResponse
+    {
+        $nom = $etudiant->getNom();
+        $this->entityManager->remove($etudiant);
+        $this->entityManager->flush();
         
-        }
+        return $this->json($nom, Response::HTTP_OK);
+    }
 
     /**
-     * @Route("/etudiantsss/ajout", name="ajoutapi" ,methods={"POST"})
+     * @Route("/etudiantsss/ajout", name="ajoutapi", methods={"POST"})
      */
-    public function ajoutEtudiant(ValidatorInterface $validator, SerializerInterface $serialize, Request $request,EntityManagerInterface $em)
+    public function ajoutEtudiant(Request $request): JsonResponse
     {
-
-        $jsonRecu=$request->getContent();
-
         try {
-            $etudiant=$serialize->deserialize($jsonRecu,Etudiants::class,'json');
-           // $donnees = json_decode($request->getContent());
-           
+            $etudiant = $this->serializer->deserialize(
+                $request->getContent(),
+                Etudiants::class,
+                'json'
+            );
 
-           $errors=$validator->validate($etudiant);
+            $errors = $this->validator->validate($etudiant);
+            if (count($errors) > 0) {
+                return $this->json($errors, Response::HTTP_BAD_REQUEST);
+            }
 
-        if (count($errors)>0) {
-           return $this->json($errors,400);
-        }
-            $em->persist($etudiant);
-            $em->flush();
-           // return new Response("OK");
-           return $this->json($etudiant,201,[]);
-             
+            $this->entityManager->persist($etudiant);
+            $this->entityManager->flush();
+
+            return $this->json($etudiant, Response::HTTP_CREATED);
+
         } catch (NotEncodableValueException $e) {
-            return $this->json(["status"=>400,"message"=>$e->getMessage()]);
+            return $this->json([
+                'status' => Response::HTTP_BAD_REQUEST,
+                'message' => $e->getMessage()
+            ], Response::HTTP_BAD_REQUEST);
         }
     }
 
-
-
-
     /**
-     * @Route("/etudiantsss/editer/{id}", name="editer" ,methods={"PUT"})
+     * @Route("/etudiantsss/editer/{id}", name="editer", methods={"PUT"})
      */
-    public function editerEtudiant(Etudiants $etudiant,ValidatorInterface $validator, SerializerInterface $serialize, Request $request,EntityManagerInterface $em)
-    {
-
-
-       
-        $jsonRecu=$request->getContent();
- 
+    public function editerEtudiant(
+        Etudiants $etudiant,
+        Request $request
+    ): JsonResponse {
         try {
+            $etudiantData = $this->serializer->deserialize(
+                $request->getContent(),
+                Etudiants::class,
+                'json'
+            );
 
+            $errors = $this->validator->validate($etudiantData);
+            if (count($errors) > 0) {
+                return $this->json($errors, Response::HTTP_BAD_REQUEST);
+            }
 
-          $etudiant1=$serialize->deserialize($jsonRecu,Etudiants::class,'json');
-            // $donnees = json_decode($request->getContent());
-       
-           if (!$etudiant){
+            $etudiant->setAge($etudiantData->getAge())
+                    ->setCin($etudiantData->getCin())
+                    ->setNom($etudiantData->getNom())
+                    ->setPrenom($etudiantData->getPrenom());
 
-            $etudiant=new Etudiants();
-            $code=201;
-        }
-           $errors=$validator->validate($etudiant);
+            $this->entityManager->flush();
 
-        if (count($errors)>0) {
-           return $this->json($errors,400);
-        }
-        //$etudiant->setCreatedAt(new \DateTime());
-        $etudiant->setAge($etudiant1->getAge());
-        $etudiant->setCin($etudiant1->getCin());
-        $etudiant->setNom($etudiant1->getNom());
-        $etudiant->setPrenom($etudiant1->getPrenom());
-        $em->persist($etudiant);
-            $em->flush();
-           // return new Response("OK");
-           return $this->json($etudiant,201,[]);
-             
+            return $this->json($etudiant, Response::HTTP_OK);
+
         } catch (NotEncodableValueException $e) {
-            return $this->json(["status"=>400,"message"=>$e->getMessage()]);
+            return $this->json([
+                'status' => Response::HTTP_BAD_REQUEST,
+                'message' => $e->getMessage()
+            ], Response::HTTP_BAD_REQUEST);
         }
-     
-
-        
-  
-
     }
-
 }
