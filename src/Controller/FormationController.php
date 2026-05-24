@@ -28,6 +28,22 @@ class FormationController extends AbstractController
      */
     public function home(): Response
     {
+        session_start();
+
+        $userId = $_SESSION['user_id'];
+        $invoiceId = $_GET['id'];
+
+        $stmt = $pdo->prepare("
+    SELECT * 
+    FROM invoices 
+    WHERE id = ?
+");
+
+        $stmt->execute([$invoiceId]);
+
+        $invoice = $stmt->fetch();
+
+        echo json_encode($invoice);
         return $this->render('base.html.twig');
     }
 
