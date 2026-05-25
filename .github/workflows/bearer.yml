@@ -22,4 +22,3 @@ jobs:
           scanner: secrets,sast
           exit-code: 1
           path: .
-          severity: 'high'
