@@ -1,11 +1,10 @@
 name: Bearer
 
 on:
-  push:
+  pull_request:
     branches:
-      - main
       - master
-      - develop
+      - main
 
 permissions:
   contents: read
@@ -13,7 +12,13 @@ permissions:
 jobs:
   rule_check:
     runs-on: ubuntu-latest
+
     steps:
       - uses: actions/checkout@v4
-      - name: Bearer
+
+      - name: Bearer Scan
         uses: bearer/bearer-action@v2
+        with:
+          scanner: secrets,sast
+          exit-code: 1
+          path: .
