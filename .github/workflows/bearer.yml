@@ -21,5 +21,4 @@ jobs:
         with:
           scanner: secrets,sast
           exit-code: 1
-          diff: true
           path: .
