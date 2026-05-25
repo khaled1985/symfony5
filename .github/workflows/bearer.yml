@@ -6,14 +6,17 @@ on:
       - master
       - main
 
-
 permissions:
   contents: read
 
 jobs:
   rule_check:
     runs-on: ubuntu-latest
+
     steps:
       - uses: actions/checkout@v4
+
       - name: Bearer
         uses: bearer/bearer-action@v2
+        with:
+          args: scan . --scanner=secrets,sast --exit-code 1
