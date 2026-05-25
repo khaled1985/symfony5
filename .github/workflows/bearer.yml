@@ -1,11 +1,11 @@
 name: Bearer
 
 on:
-  push:
+  pull_request:
     branches:
-      - main
       - master
-      - develop
+      - main
+
 
 permissions:
   contents: read

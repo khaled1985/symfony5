@@ -33,7 +33,7 @@ class FormationController extends AbstractController
 
 
     /**
-     * @Route("/formation", name="formation")
+     * @Route("/formation", name="formationn")
      */
     public function index(): Response
     {
