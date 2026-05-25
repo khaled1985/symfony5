@@ -16,7 +16,10 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Bearer
+      - name: Bearer Scan
         uses: bearer/bearer-action@v2
         with:
-          args: scan . --scanner=secrets,sast --exit-code 1
+          scanner: secrets,sast
+          exit-code: 1
+          path: .
+          severity: 'high'
